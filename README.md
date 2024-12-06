@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/seed_builder.svg)](https://badge.fury.io/rb/seed_builder) [![Test Status](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml/badge.svg)](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/amkisko/seed_builder.rb/graph/badge.svg?token=57R6OHOJDQ)](https://codecov.io/gh/amkisko/seed_builder.rb)
 
-Seed builder for ActiveRecord.
+Seed builder for ActiveRecord. Includes seeds loader and generator.
 
 Sponsored by [Kisko Labs](https://www.kiskolabs.com).
 

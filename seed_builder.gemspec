@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.authors = ["Andrei Makarov"]
   gem.email = ["andrei@kiskolabs.com"]
   gem.homepage = repository_url
-  gem.summary = "Seed builder"
+  gem.summary = "Seed builder with loader and generator"
   gem.description = gem.summary
   gem.metadata = {
     "homepage" => repository_url,
