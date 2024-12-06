@@ -17,8 +17,8 @@ if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]]; then
   exit 1
 fi
 
-GEM_NAME="seedbuilder"
-VERSION=$(grep -Eo "VERSION\s*=\s*\".+\"" lib/seedbuilder.rb  | grep -Eo "[0-9.]{5,}")
+GEM_NAME="seed_builder"
+VERSION=$(grep -Eo "VERSION\s*=\s*\".+\"" lib/seed_builder.rb  | grep -Eo "[0-9.]{5,}")
 GEM_FILE="$GEM_NAME-$VERSION.gem"
 
 e "gem build $GEM_NAME.gemspec"
