@@ -21,9 +21,7 @@ gem install seed_builder
 ## Gemfile
 
 ```ruby
-group :development do
-  gem "seed_builder"
-end
+gem "seed_builder"
 ```
 
 ## Usage
