@@ -1,6 +1,6 @@
 # seed_builder.rb
 
-[![Gem Version](https://badge.fury.io/rb/seed_builder.svg)](https://badge.fury.io/rb/seed_builder) [![Test Status](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml/badge.svg)](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/amkisko/seed_builder.rb/graph/badge.svg?token=VIZ94XFOR3)](https://codecov.io/gh/amkisko/seed_builder.rb)
+[![Gem Version](https://badge.fury.io/rb/seed_builder.svg)](https://badge.fury.io/rb/seed_builder) [![Test Status](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml/badge.svg)](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/amkisko/seed_builder.rb/graph/badge.svg?token=57R6OHOJDQ)](https://codecov.io/gh/amkisko/seed_builder.rb)
 
 Seed builder for ActiveRecord.
 
