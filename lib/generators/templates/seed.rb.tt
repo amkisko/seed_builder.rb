@@ -1,0 +1,21 @@
+class <%= migration_class_name %>
+  def change
+
+  end
+end
+<%- if SeedBuilder.config.generate_spec? %>
+
+# TESTING:
+# - bin/rspec <%= SeedBuilder.config.seeds_relative_path %>/<%= migration_number %>_<%= migration_file_name %>.rb
+if Rails.env.test? && Object.const_defined?(:RSpec)
+  require "rails_helper"
+
+  RSpec.describe <%= migration_class_name %>, type: :seed do
+    subject(:change) { described_class.new.change }
+
+    it do
+      expect { change }.not_to raise_error
+    end
+  end
+end
+<%- end %>
