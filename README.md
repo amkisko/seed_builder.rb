@@ -6,7 +6,7 @@ Seed builder for ActiveRecord. Includes seeds loader and generator.
 
 Sponsored by [Kisko Labs](https://www.kiskolabs.com).
 
-## Install
+## Installation
 
 Using Bundler:
 ```sh
