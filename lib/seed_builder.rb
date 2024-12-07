@@ -4,11 +4,13 @@ require "seed_builder/loader"
 module SeedBuilder
   VERSION = "1.0.0".freeze
 
-  def self.config
-    @config ||= Config.new
+  module_function
+
+  def config
+    @@config ||= Config.new
   end
 
-  def self.configure
+  def configure
     yield config
   end
 end
