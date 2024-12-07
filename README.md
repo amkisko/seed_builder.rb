@@ -9,11 +9,13 @@ Sponsored by [Kisko Labs](https://www.kiskolabs.com).
 ## Installation
 
 Using Bundler:
+
 ```sh
 bundle add seed_builder
 ```
 
 Using RubyGems:
+
 ```sh
 gem install seed_builder
 ```
@@ -80,9 +82,10 @@ SeedBuilder.config.generate_spec = false
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/amkisko/seed_builder.rb
+Bug reports and pull requests are welcome on GitHub at <https://github.com/amkisko/seed_builder.rb>
 
 Contribution policy:
+
 - New features are not necessarily added to the gem
 - Pull request should have test coverage for affected parts
 - Pull request should have changelog entry

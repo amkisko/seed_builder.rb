@@ -1,6 +1,7 @@
 require "spec_helper"
 
 class SeedBuilderUser < ActiveRecord::Base; end
+
 class SeedUser < SeedBuilderUser; end
 
 describe SeedBuilder::Loader do
