@@ -2,9 +2,8 @@ PATH
   remote: .
   specs:
     seed_builder (1.0.1)
-      activerecord (> 5)
-      activesupport (> 5)
-      rails (> 5)
+      activerecord (>= 6, < 8.1)
+      rails (>= 6, < 8.1)
 
 GEM
   remote: https://rubygems.org/

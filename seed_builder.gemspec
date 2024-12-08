@@ -30,9 +30,8 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = ">= 3"
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "rails", "> 5"
-  gem.add_dependency "activerecord", "> 5"
-  gem.add_dependency "activesupport", "> 5"
+  gem.add_dependency "rails", ">= 6", "< 8.1"
+  gem.add_dependency "activerecord", ">= 6", "< 8.1"
 
   gem.add_development_dependency "bundler", "~> 2"
   gem.add_development_dependency "rspec", "~> 3"
