@@ -57,7 +57,7 @@ SeedBuilder.config.load_default_seeds = false
 Absolute path will be resolved by using `Rails.root`.
 
 ```ruby
-SeedBuilder.config.seeds_relative_path = "db/seeds"
+SeedBuilder.config.seeds_path = "db/seeds"
 ```
 
 ### Turn off test script generation

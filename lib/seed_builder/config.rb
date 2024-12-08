@@ -7,16 +7,16 @@ module SeedBuilder
 
     attr_writer :seeds_path
     def seeds_path
-      @seeds_path ||= Rails.root.join(seeds_relative_path)
+      @seeds_path ||= "db/seeds"
+    end
+
+    attr_writer :seeds_full_path
+    def seeds_full_path
+      @seeds_full_path ||= Rails.root.join(seeds_path)
     end
 
     def seeds_path_glob
-      "#{seeds_path}/*.rb"
-    end
-
-    attr_writer :seeds_relative_path
-    def seeds_relative_path
-      @seeds_relative_path ||= "db/seeds"
+      "#{seeds_full_path}/*.rb"
     end
 
     attr_writer :load_default_seeds

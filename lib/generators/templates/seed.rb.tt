@@ -6,7 +6,7 @@ end
 <%- if SeedBuilder.config.generate_spec? %>
 
 # TESTING:
-# - bin/rspec <%= SeedBuilder.config.seeds_relative_path %>/<%= migration_number %>_<%= migration_file_name %>.rb
+# - bin/rspec <%= SeedBuilder.config.seeds_path %>/<%= migration_number %>_<%= migration_file_name %>.rb
 if Rails.env.test? && Object.const_defined?(:RSpec)
   require "rails_helper"
 

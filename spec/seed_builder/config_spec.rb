@@ -8,7 +8,7 @@ describe SeedBuilder::Config do
   end
 
   it "has default seeds path" do
-    expect(config.seeds_relative_path).to eq "db/seeds"
+    expect(config.seeds_path).to eq "db/seeds"
   end
 
   it "has default load_seeds" do
@@ -23,8 +23,8 @@ describe SeedBuilder::Config do
     expect(config.generate_spec?).to be true
   end
 
-  it "has default seeds_path" do
-    expect(config.seeds_path).to eq Rails.root.join("db/seeds")
+  it "has default seeds_full_path" do
+    expect(config.seeds_full_path).to eq Rails.root.join("db/seeds")
   end
 
   it "has default seeds_path_glob" do

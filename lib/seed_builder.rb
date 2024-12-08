@@ -2,7 +2,7 @@ require "seed_builder/config"
 require "seed_builder/loader"
 
 module SeedBuilder
-  VERSION = "1.0.1".freeze
+  VERSION = "1.1.0".freeze
 
   module_function
 
