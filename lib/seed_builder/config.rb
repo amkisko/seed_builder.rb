@@ -21,17 +21,17 @@ module SeedBuilder
 
     attr_writer :load_default_seeds
     def load_default_seeds?
-      @load_default_seeds ||= true
+      @load_default_seeds.nil? ? true : @load_default_seeds
     end
 
     attr_writer :load_seeds
     def load_seeds?
-      @load_seeds ||= true
+      @load_seeds.nil? ? true : @load_seeds
     end
 
     attr_writer :generate_spec
     def generate_spec?
-      @generate_spec ||= true
+      @generate_spec.nil? ? true : @generate_spec
     end
   end
 end
