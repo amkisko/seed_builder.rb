@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.email = ["andrei@kiskolabs.com"]
   gem.homepage = repository_url
   gem.summary = "Seed builder with loader and generator"
-  gem.description = gem.summary
+  gem.description = "Extension for ActiveRecord to organize seeds in a directory and generate them as migrations"
   gem.metadata = {
     "homepage" => repository_url,
     "source_code_uri" => repository_url,
