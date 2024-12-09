@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    seed_builder (1.2.0)
+    seed_builder (1.2.1)
       activerecord (>= 6, < 8.1)
       rails (>= 6, < 8.1)
 

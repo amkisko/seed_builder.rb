@@ -9,17 +9,20 @@ module SeedBuilder
       ActiveRecord::Base.connection.schema_cache.clear!
       ActiveRecord::Base.descendants.each(&:reset_column_information)
 
-      default_seeds_rb = SeedBuilder.config.default_seeds_path
+      default_seeds_rb = SeedBuilder.config.default_seeds_full_path
       if File.exist?(default_seeds_rb) && SeedBuilder.config.load_default_seeds?
+        started_at = Time.current
+        puts "== #{SeedBuilder.config.default_seeds_path}: seeding"
         require default_seeds_rb
+        puts "== #{SeedBuilder.config.default_seeds_path}: seeded (#{(Time.current - started_at).round(4)}s)"
       end
 
-      base_path = SeedBuilder.config.seeds_path
+      base_path = SeedBuilder.config.seeds_full_path
       if File.exist?(base_path) && SeedBuilder.config.load_seeds?
         Dir[SeedBuilder.config.seeds_path_glob]
           .map { |f| File.basename(f, ".*") }
           .each do |seed_path|
-            require "#{base_path}/#{seed_path}"
+            require "#{base_path}/#{seed_path}.rb"
             timestamp, klass_name = seed_path.scan(/^([0-9]+)_(.+)$/).first
             next if klass_name.blank?
 

@@ -2,7 +2,12 @@ module SeedBuilder
   class Config
     attr_writer :default_seeds_path
     def default_seeds_path
-      @default_seeds_path ||= Rails.root.join("db/seeds.rb")
+      @default_seeds_path ||= "db/seeds.rb"
+    end
+
+    attr_writer :default_seeds_full_path
+    def default_seeds_full_path
+      @default_seeds_full_path ||= Rails.root.join(default_seeds_path)
     end
 
     attr_writer :seeds_path

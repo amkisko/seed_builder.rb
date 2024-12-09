@@ -19,8 +19,8 @@ describe SeedBuilder::Loader do
       allow(Rails).to receive(:logger=)
 
       SeedBuilder.configure do |config|
-        config.seeds_path = File.expand_path("../../fixtures/seeds", __FILE__)
-        config.default_seeds_path = File.expand_path("../../fixtures/seeds.rb", __FILE__)
+        config.seeds_full_path = File.expand_path("../../fixtures/seeds", __FILE__)
+        config.default_seeds_full_path = File.expand_path("../../fixtures/seeds.rb", __FILE__)
         config.load_default_seeds = load_default_seeds
         config.load_seeds = load_seeds
       end
@@ -29,6 +29,7 @@ describe SeedBuilder::Loader do
 
     it "loads the seeds" do
       expect(SeedUser.count).to eq 1
+      expect(SeedBuilderUser.count).to eq 1
     end
   end
 end
