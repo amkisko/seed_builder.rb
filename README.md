@@ -66,6 +66,12 @@ SeedBuilder.config.seeds_path = "db/seeds"
 SeedBuilder.config.generate_spec = false
 ```
 
+### Turn off loader usage for ActiveRecord
+
+```ruby
+SeedBuilder.config.use_seed_loader = false
+```
+
 ## Specification checklist
 
 - [x] User can generate seed file under `db/seeds` directory with common format

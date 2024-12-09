@@ -2,7 +2,7 @@ require "seed_builder/config"
 require "seed_builder/loader"
 
 module SeedBuilder
-  VERSION = "1.1.0".freeze
+  VERSION = "1.2.0".freeze
 
   module_function
 
@@ -14,3 +14,5 @@ module SeedBuilder
     yield config
   end
 end
+
+require "rails_config"

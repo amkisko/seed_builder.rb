@@ -33,5 +33,10 @@ module SeedBuilder
     def generate_spec?
       @generate_spec.nil? ? true : @generate_spec
     end
+
+    attr_writer :use_seed_loader
+    def use_seed_loader?
+      @use_seed_loader.nil? ? true : @use_seed_loader
+    end
   end
 end
