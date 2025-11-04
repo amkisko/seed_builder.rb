@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+# Load Rails environment
+require_relative "../config/environment" rescue nil
+
+unless defined?(Rails)
+  puts "Error: Rails environment not loaded. Please run this from a Rails application root."
+  puts "Alternatively, use: bin/rails seed:run[SEED_NAME]"
+  exit 1
+end
+
+require_relative "../lib/seed_builder"
+
+if ARGV.empty?
+  puts "Usage: bin/seed SEED_NAME"
+  puts ""
+  puts "Run a specific seed file by name."
+  puts ""
+  puts "Examples:"
+  puts "  bin/seed create_users"
+  puts "  bin/seed 20241206200111_create_users"
+  puts "  bin/seed 20241206200111"
+  puts ""
+  puts "Note: This script must be run from a Rails application root."
+  puts "      If multiple seed files match the name, use the full name with"
+  puts "      timestamp to avoid ambiguity (e.g., 20241206200111_create_users)."
+  puts ""
+  puts "Alternatively, use: bin/rails seed:run[SEED_NAME]"
+  exit 1
+end
+
+seed_name = ARGV[0]
+
+loader = SeedBuilder::Loader.new
+loader.load_seed_file(seed_name)
+

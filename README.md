@@ -30,9 +30,24 @@ gem "seed_builder"
 
 ### Run seeds
 
+Run all seeds:
+
 ```sh
 bin/rails db:seed
 ```
+
+Run a specific seed file:
+
+```sh
+bin/rails seed:run[create_users]
+```
+
+You can specify the seed name in different formats:
+- Class name: `create_users` (matches `20241206200111_create_users.rb`)
+- Full name: `20241206200111_create_users`
+- Timestamp: `20241206200111`
+
+**Note:** If multiple seed files match the same name, you'll be prompted to use the full name with timestamp to avoid ambiguity. For example, if both `20241206200111_create_users.rb` and `20241206200112_create_users.rb` exist, running `bin/rails seed:run[create_users]` will show an error listing all matches and ask you to be more specific.
 
 ### Generate seed file
 
@@ -77,7 +92,7 @@ SeedBuilder.config.use_seed_loader = false
 - [x] User can generate seed file under `db/seeds` directory with common format
 - [x] User can generate seed file with test script included
 - [x] User can run all seeds
-- [ ] User can run specific seed file
+- [x] User can run specific seed file
 
 ## Limitations & explanations
 
