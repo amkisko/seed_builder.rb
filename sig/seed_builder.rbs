@@ -1,0 +1,7 @@
+module SeedBuilder
+  VERSION: String
+
+  def self.config: () -> Config
+  def self.configure: () { (Config) -> void } -> void
+end
+

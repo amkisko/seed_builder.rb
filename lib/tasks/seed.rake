@@ -20,4 +20,3 @@ namespace :seed do
     loader.load_seed_file(args[:seed_name])
   end
 end
-

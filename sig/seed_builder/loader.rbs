@@ -1,0 +1,8 @@
+module SeedBuilder
+  class Loader
+    def initialize: () -> void
+    def load_seed: () -> void
+    def load_seed_file: (String seed_name) -> void
+  end
+end
+

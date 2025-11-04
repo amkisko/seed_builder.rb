@@ -26,22 +26,22 @@ module SeedBuilder
 
     attr_writer :load_default_seeds
     def load_default_seeds?
-      @load_default_seeds.nil? ? true : @load_default_seeds
+      @load_default_seeds.nil? || @load_default_seeds
     end
 
     attr_writer :load_seeds
     def load_seeds?
-      @load_seeds.nil? ? true : @load_seeds
+      @load_seeds.nil? || @load_seeds
     end
 
     attr_writer :generate_spec
     def generate_spec?
-      @generate_spec.nil? ? true : @generate_spec
+      @generate_spec.nil? || @generate_spec
     end
 
     attr_writer :use_seed_loader
     def use_seed_loader?
-      @use_seed_loader.nil? ? true : @use_seed_loader
+      @use_seed_loader.nil? || @use_seed_loader
     end
   end
 end

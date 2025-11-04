@@ -50,7 +50,7 @@ module SeedBuilder
           matches = find_seed_file_matches(base_path, seed_name)
           puts "Multiple seed files match '#{seed_name}':"
           matches.each do |file|
-            puts "  - #{File.basename(file, '.*')}"
+            puts "  - #{File.basename(file, ".*")}"
           end
           puts "Please be more specific using the full name with timestamp (e.g., 20241206200111_create_users)"
           return

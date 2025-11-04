@@ -101,15 +101,49 @@ SeedBuilder.config.use_seed_loader = false
 - Seeded data is not reversible, there is no point to implement it as logic can be complex and operations on data might lead to irreversible changes
 - Seed file is not a migration, although as good practice is to keep it idempotent, e.g. by checking uniqueness of seeded records
 
+## Development
+
+```bash
+# Install dependencies
+bundle install
+
+# Run tests
+bundle exec rspec
+
+# Run linter
+bundle exec standardrb --fix
+
+# Check type signatures
+bundle exec rbs validate
+```
+
+### Development: Using from Local Repository
+
+When developing the gem or testing changes in your application, you can point your Gemfile to a local path:
+
+```ruby
+# In your application's Gemfile
+gem "seed_builder", path: "../seed_builder.rb"
+```
+
+Then run:
+
+```bash
+bundle install
+```
+
+**Note:** When using `path:` in your Gemfile, Bundler will use the local gem directly. Changes you make to the gem code will be immediately available in your application without needing to rebuild or reinstall the gem. This is ideal for development and testing.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at <https://github.com/amkisko/seed_builder.rb>
 
 Contribution policy:
-
 - New features are not necessarily added to the gem
 - Pull request should have test coverage for affected parts
 - Pull request should have changelog entry
+
+Review policy:
 - It might take up to 2 calendar weeks to review and merge critical fixes
 - It might take up to 6 calendar months to review and merge pull request
 - It might take up to 1 calendar year to review an issue

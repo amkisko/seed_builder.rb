@@ -1,0 +1,22 @@
+module SeedBuilder
+  class Config
+    def default_seeds_path: () -> String
+    def default_seeds_path=: (String) -> String
+    def default_seeds_full_path: () -> Pathname
+    def default_seeds_full_path=: (Pathname) -> Pathname
+    def seeds_path: () -> String
+    def seeds_path=: (String) -> String
+    def seeds_full_path: () -> Pathname
+    def seeds_full_path=: (Pathname) -> Pathname
+    def seeds_path_glob: () -> String
+    def load_default_seeds?: () -> bool
+    def load_default_seeds=: (bool) -> bool
+    def load_seeds?: () -> bool
+    def load_seeds=: (bool) -> bool
+    def generate_spec?: () -> bool
+    def generate_spec=: (bool) -> bool
+    def use_seed_loader?: () -> bool
+    def use_seed_loader=: (bool) -> bool
+  end
+end
+

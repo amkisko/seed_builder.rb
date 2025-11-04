@@ -1,11 +1,13 @@
 require "spec_helper"
 
 # Define Rails module if not already defined
-module Rails
-  class << self
-    attr_accessor :root, :env, :logger
+unless defined?(Rails)
+  module Rails
+    class << self
+      attr_accessor :root, :env, :logger
+    end
   end
-end unless defined?(Rails)
+end
 
 class SeedBuilderUser < ActiveRecord::Base; end
 

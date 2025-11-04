@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
     "rubygems_mfa_required" => "true"
   }
 
-  gem.files = `git ls-files`.split("\n")
+  gem.files = `git ls-files`.split("\n").reject { |f| f.match?(%r{^(test|spec|features)/}) }
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
@@ -39,4 +39,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "simplecov", "~> 0.21"
   gem.add_development_dependency "simplecov-cobertura", "~> 2"
   gem.add_development_dependency "sqlite3", "~> 2.4"
+  gem.add_development_dependency "standard", "~> 1.0"
+  gem.add_development_dependency "rbs", "~> 3.0"
 end
