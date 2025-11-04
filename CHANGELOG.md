@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.3.0 (2025-11-04)
 
 - Add ability to run specific seed files on demand using `bin/rails seed:run[SEED_NAME]`
 - Add `load_seed_file` method to `SeedBuilder::Loader` for loading individual seeds
