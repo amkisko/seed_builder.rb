@@ -25,6 +25,8 @@ describe SeedBuilder::Loader do
     allow(Rails).to receive(:env).and_return(rails_env)
     allow(Rails).to receive(:logger).and_return(logger)
     allow(Rails).to receive(:logger=)
+    # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+    SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
 
     SeedBuilder.configure do |config|
       config.seeds_full_path = seeds_path
@@ -59,7 +61,13 @@ describe SeedBuilder::Loader do
     end
 
     context "when seeds directory does not exist" do
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
+
       before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
         SeedBuilder.configure do |config|
           config.seeds_full_path = "/non/existent/path"
           config.load_default_seeds = false
@@ -68,7 +76,8 @@ describe SeedBuilder::Loader do
       end
 
       it "outputs a message" do
-        expect { loader.load_seed }.to output(/Seed directory.*does not exist/).to_stdout
+        loader.load_seed
+        expect(log_output.string).to match(/Seed directory.*does not exist/)
       end
     end
   end
@@ -109,8 +118,18 @@ describe SeedBuilder::Loader do
     end
 
     context "when seed file does not exist" do
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
+
+      before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
+      end
+
       it "outputs an error message" do
-        expect { loader.load_seed_file("nonexistent_seed") }.to output(/Seed file 'nonexistent_seed' not found/).to_stdout
+        loader.load_seed_file("nonexistent_seed")
+        expect(log_output.string).to match(/Seed file 'nonexistent_seed' not found/)
       end
 
       it "does not raise an error" do
@@ -121,8 +140,13 @@ describe SeedBuilder::Loader do
     context "when multiple seed files match the name" do
       let(:seed_path_1) { File.expand_path("../../tmp/rspec/db/seeds/20241206200111_create_users.rb", __FILE__) }
       let(:seed_path_2) { File.expand_path("../../tmp/rspec/db/seeds/20241206200112_create_users.rb", __FILE__) }
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
 
       before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
         FileUtils.mkdir_p(File.dirname(seed_path_1))
         File.write(seed_path_1, "class CreateUsers; def change; end; end")
         File.write(seed_path_2, "class CreateUsers; def change; end; end")
@@ -137,9 +161,10 @@ describe SeedBuilder::Loader do
       end
 
       it "outputs an error message listing all matching files" do
-        expect { loader.load_seed_file("create_users") }.to output(
+        loader.load_seed_file("create_users")
+        expect(log_output.string).to match(
           /Multiple seed files match 'create_users':.*20241206200111_create_users.*20241206200112_create_users.*Please be more specific/m
-        ).to_stdout
+        )
       end
 
       it "does not raise an error" do
@@ -148,20 +173,28 @@ describe SeedBuilder::Loader do
 
       it "works when using the full name with timestamp" do
         SeedBuilderUser.delete_all
-        expect { loader.load_seed_file("20241206200111_create_users") }.not_to output(/Multiple seed files/).to_stdout
+        loader.load_seed_file("20241206200111_create_users")
+        expect(log_output.string).not_to match(/Multiple seed files/)
         expect(SeedBuilderUser.count).to eq 0 # The seed doesn't actually create anything, just checks it runs
       end
     end
 
     context "when seeds directory does not exist" do
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
+
       before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
         SeedBuilder.configure do |config|
           config.seeds_full_path = "/non/existent/path"
         end
       end
 
       it "outputs an error message" do
-        expect { loader.load_seed_file("create_users") }.to output(/Seed directory.*does not exist/).to_stdout
+        loader.load_seed_file("create_users")
+        expect(log_output.string).to match(/Seed directory.*does not exist/)
       end
 
       it "does not raise an error" do
@@ -171,8 +204,13 @@ describe SeedBuilder::Loader do
 
     context "when seed file has invalid format" do
       let(:invalid_seed_path) { File.expand_path("../../tmp/rspec/invalid_seed.rb", __FILE__) }
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
 
       before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
         FileUtils.mkdir_p(File.dirname(invalid_seed_path))
         File.write(invalid_seed_path, "class InvalidSeed; end")
         SeedBuilder.configure do |config|
@@ -185,7 +223,8 @@ describe SeedBuilder::Loader do
       end
 
       it "outputs an error message" do
-        expect { loader.load_seed_file("invalid_seed") }.to output(/Invalid seed file format/).to_stdout
+        loader.load_seed_file("invalid_seed")
+        expect(log_output.string).to match(/Invalid seed file format/)
       end
 
       it "does not raise an error" do
@@ -219,8 +258,13 @@ describe SeedBuilder::Loader do
 
     context "when seed raises RecordInvalid" do
       let(:invalid_seed_path) { File.expand_path("../../tmp/rspec/db/seeds/20241206200113_invalid_record.rb", __FILE__) }
+      let(:log_output) { StringIO.new }
+      let(:test_logger) { Logger.new(log_output) }
 
       before do
+        allow(Rails).to receive(:logger).and_return(test_logger)
+        # Reset SeedBuilder logger to pick up the stubbed Rails.logger
+        SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
         # Add a validation to SeedBuilderUser to make save! fail
         SeedBuilderUser.class_eval do
           validates :email, presence: true
@@ -248,7 +292,7 @@ describe SeedBuilder::Loader do
 
       it "outputs error message and re-raises" do
         expect { loader.load_seed_file("invalid_record") }.to raise_error(ActiveRecord::RecordInvalid)
-          .and output(/Seeding.*failed/).to_stdout
+        expect(log_output.string).to match(/Seeding.*failed/)
       end
     end
   end

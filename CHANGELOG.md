@@ -2,6 +2,11 @@
 
 ## 1.3.0 (2025-11-04)
 
+- Replace `puts` statements with `Rails.logger` for proper logging integration
+- Add tagged logging with `seed` tag for all seed-related log messages
+- Add `logger` configuration option to allow custom logger setup via `SeedBuilder.config.logger = custom_logger`
+- Fix seed file loading to use `load` instead of `require` to ensure files are re-executed on each seed run
+- Logger automatically detects if `Rails.logger` already supports tagging to avoid double-wrapping
 - Add ability to run specific seed files on demand using `bin/rails seed:run[SEED_NAME]`
 - Add `load_seed_file` method to `SeedBuilder::Loader` for loading individual seeds
 - Add ambiguous match detection: when multiple seed files match the same name, the loader will show an error listing all matches and prompt the user to use the full name with timestamp

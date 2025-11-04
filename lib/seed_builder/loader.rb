@@ -6,9 +6,13 @@ module SeedBuilder
       default_seeds_rb = SeedBuilder.config.default_seeds_full_path
       if File.exist?(default_seeds_rb) && SeedBuilder.config.load_default_seeds?
         started_at = Time.current
-        puts "== #{SeedBuilder.config.default_seeds_path}: seeding"
+        logger.tagged("seed") do
+          logger.info "== #{SeedBuilder.config.default_seeds_path}: seeding"
+        end
         load default_seeds_rb
-        puts "== #{SeedBuilder.config.default_seeds_path}: seeded (#{(Time.current - started_at).round(4)}s)"
+        logger.tagged("seed") do
+          logger.info "== #{SeedBuilder.config.default_seeds_path}: seeded (#{(Time.current - started_at).round(4)}s)"
+        end
       end
 
       base_path = SeedBuilder.config.seeds_full_path
@@ -23,7 +27,9 @@ module SeedBuilder
             execute_seed_class(klass_name, timestamp)
           end
       else
-        puts "Seed directory #{base_path} does not exist"
+        logger.tagged("seed") do
+          logger.warn "Seed directory #{base_path} does not exist"
+        end
       end
     end
 
@@ -32,7 +38,9 @@ module SeedBuilder
 
       base_path = SeedBuilder.config.seeds_full_path
       unless File.exist?(base_path)
-        puts "Seed directory #{base_path} does not exist"
+        logger.tagged("seed") do
+          logger.warn "Seed directory #{base_path} does not exist"
+        end
         return
       end
 
@@ -41,15 +49,19 @@ module SeedBuilder
       result = find_seed_file(base_path, seed_name)
 
       if result.nil?
-        puts "Seed file '#{seed_name}' not found in #{base_path}"
+        logger.tagged("seed") do
+          logger.warn "Seed file '#{seed_name}' not found in #{base_path}"
+        end
         return
       elsif result == :ambiguous
         matches = find_seed_file_matches(base_path, seed_name)
-        puts "Multiple seed files match '#{seed_name}':"
-        matches.each do |file|
-          puts "  - #{File.basename(file, ".*")}"
+        logger.tagged("seed") do
+          logger.warn "Multiple seed files match '#{seed_name}':"
+          matches.each do |file|
+            logger.warn "  - #{File.basename(file, ".*")}"
+          end
+          logger.warn "Please be more specific using the full name with timestamp (e.g., 20241206200111_create_users)"
         end
-        puts "Please be more specific using the full name with timestamp (e.g., 20241206200111_create_users)"
         return
       end
 
@@ -59,7 +71,9 @@ module SeedBuilder
       timestamp, klass_name = seed_path.scan(/^([0-9]+)_(.+)$/).first
 
       if klass_name.blank?
-        puts "Invalid seed file format: #{seed_path}. Expected format: TIMESTAMP_CLASS_NAME.rb"
+        logger.tagged("seed") do
+          logger.warn "Invalid seed file format: #{seed_path}. Expected format: TIMESTAMP_CLASS_NAME.rb"
+        end
         return
       end
 
@@ -69,6 +83,10 @@ module SeedBuilder
 
     private
 
+    def logger
+      SeedBuilder.logger
+    end
+
     def prepare_active_record
       ActiveRecord::Base.connection.schema_cache.clear!
       ActiveRecord::Base.descendants.each(&:reset_column_information)
@@ -77,7 +95,9 @@ module SeedBuilder
     def execute_seed_class(klass_name, timestamp, seed_name = nil)
       klass = klass_name.camelize.constantize
       klass_name_display = klass.name
-      puts "== #{timestamp} #{klass_name_display}: seeding"
+      logger.tagged("seed") do
+        logger.info "== #{timestamp} #{klass_name_display}: seeding"
+      end
       started_at = Time.current
       seed_instance = klass.new
       if seed_instance.respond_to?(:change)
@@ -85,13 +105,19 @@ module SeedBuilder
       else
         raise "Seed #{klass_name_display} does not respond to :change"
       end
-      puts "== #{timestamp} #{klass_name_display}: seeded (#{(Time.current - started_at).round(4)}s)"
+      logger.tagged("seed") do
+        logger.info "== #{timestamp} #{klass_name_display}: seeded (#{(Time.current - started_at).round(4)}s)"
+      end
     rescue ActiveRecord::RecordInvalid => e
       klass_name_display = defined?(klass) ? klass.name : (klass_name&.camelize || seed_name || klass_name)
-      puts "Seeding #{klass_name_display} failed: #{e.record.errors.full_messages}"
+      logger.tagged("seed") do
+        logger.error "Seeding #{klass_name_display} failed: #{e.record.errors.full_messages}"
+      end
       raise e
     rescue => e
-      puts "Error loading seed: #{e.message}"
+      logger.tagged("seed") do
+        logger.error "Error loading seed: #{e.message}"
+      end
       raise e
     end
 

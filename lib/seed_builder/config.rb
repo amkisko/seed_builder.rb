@@ -43,5 +43,7 @@ module SeedBuilder
     def use_seed_loader?
       @use_seed_loader.nil? || @use_seed_loader
     end
+
+    attr_accessor :logger
   end
 end

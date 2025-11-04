@@ -1,5 +1,14 @@
 require "spec_helper"
 
+# Define Rails module if not already defined
+unless defined?(Rails)
+  module Rails
+    class << self
+      attr_accessor :root, :env, :logger
+    end
+  end
+end
+
 describe SeedBuilder::Config do
   subject(:config) { described_class.new }
 
@@ -29,5 +38,11 @@ describe SeedBuilder::Config do
 
   it "has default seeds_path_glob" do
     expect(config.seeds_path_glob).to eq Rails.root.join("db/seeds/*.rb").to_s
+  end
+
+  it "allows setting a custom logger" do
+    custom_logger = Logger.new($stdout)
+    config.logger = custom_logger
+    expect(config.logger).to eq custom_logger
   end
 end

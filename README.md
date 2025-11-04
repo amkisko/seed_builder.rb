@@ -93,6 +93,18 @@ SeedBuilder.config.generate_spec = false
 SeedBuilder.config.use_seed_loader = false
 ```
 
+### Set custom logger
+
+By default, SeedBuilder uses `Rails.logger` (or falls back to `Logger.new($stdout)` if Rails is not available). All seed-related log messages are tagged with `[seed]`.
+
+To use a custom logger:
+
+```ruby
+SeedBuilder.config.logger = MyCustomLogger.new
+```
+
+The logger will be automatically wrapped with `ActiveSupport::TaggedLogging` if it doesn't already support tagging, ensuring all seed messages are tagged with `[seed]`.
+
 ## Specification checklist
 
 - [x] User can generate seed file under `db/seeds` directory with common format
