@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.platform = Gem::Platform::RUBY
 
   gem.authors = ["Andrei Makarov"]
-  gem.email = ["andrei@kiskolabs.com"]
+  gem.email = ["contact@kiskolabs.com"]
   gem.homepage = repository_url
   gem.summary = "Seed builder with loader and generator"
   gem.description = "Extension for ActiveRecord to organize seeds in a directory and generate them as migrations"
