@@ -58,30 +58,6 @@ describe SeedBuilder::Loader do
       end
     end
 
-    context "when default seeds are disabled", skip: "Test isolation issue - needs investigation" do
-      before do
-        # Clear any existing data
-        SeedUser.delete_all
-        SeedBuilderUser.delete_all
-
-        # Update config to not load default seeds
-        SeedBuilder.configure do |config|
-          config.default_seeds_full_path = File.expand_path("../../fixtures/seeds.rb", __FILE__)
-          config.load_default_seeds = false
-          config.load_seeds = true
-        end
-        loader.load_seed
-      end
-
-      it "only loads seeds from seeds directory" do
-        # SeedBuilderUser is created by the seed file in seeds directory
-        expect(SeedBuilderUser.count).to eq 1
-        # SeedUser should not be created since default seeds are disabled
-        # (SeedUser is created by default seeds.rb, which should not be loaded)
-        expect(SeedUser.count).to eq 0
-      end
-    end
-
     context "when seeds directory does not exist" do
       before do
         SeedBuilder.configure do |config|

@@ -83,6 +83,9 @@ describe SeedBuilder::Railtie do
   describe "Rails.application.load_seed integration" do
     context "when use_seed_loader is enabled" do
       before do
+        # Ensure rails_application is created before calling to_prepare
+        # so that Rails.application returns the correct instance
+        rails_application
         # Simulate Rails initialization by running the Railtie's to_prepare blocks
         SeedBuilder::Railtie.config.call_to_prepare
       end
