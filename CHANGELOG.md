@@ -5,6 +5,7 @@
 - Add ability to run specific seed files on demand using `bin/rails seed:run[SEED_NAME]`
 - Add `load_seed_file` method to `SeedBuilder::Loader` for loading individual seeds
 - Add ambiguous match detection: when multiple seed files match the same name, the loader will show an error listing all matches and prompt the user to use the full name with timestamp
+- Patch `Rails.application.load_seed` to use SeedBuilder loader via Railtie integration
 
 ## 1.2.1
 

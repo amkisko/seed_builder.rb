@@ -36,6 +36,12 @@ Run all seeds:
 bin/rails db:seed
 ```
 
+Or in code:
+
+```ruby
+Rails.application.load_seed
+```
+
 Run a specific seed file:
 
 ```sh

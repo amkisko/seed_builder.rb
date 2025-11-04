@@ -16,3 +16,4 @@ module SeedBuilder
 end
 
 require "rails_config"
+require "seed_builder/railtie" if defined?(Rails::Railtie)
