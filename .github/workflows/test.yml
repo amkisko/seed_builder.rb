@@ -5,38 +5,94 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: false
 jobs:
-  rspec:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: [ruby, jruby, truffleruby]
+        include:
+          - rails_version: rails-6.1
+            ruby_version: "3.1"
+          - rails_version: rails-7.2
+            ruby_version: "3.2"
+          - rails_version: rails-8.1
+            ruby_version: "3.3"
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
-      - run: bundle exec rspec
-  coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+          ruby-version: ${{ matrix.ruby_version }}
+          bundler-cache: false
+
+      - name: Install appraisal gem
+        run: gem install appraisal --no-document
+
+      - name: Generate appraisal gemfile
+        run: |
+          # Convert rails-6.1 to rails_6.1 format for gemfile name
+          GEMFILE_NAME=$(echo "${{ matrix.rails_version }}" | tr '-' '_')
+          appraisal install ${{ matrix.rails_version }} || true
+          # Verify gemfile was created
+          if [ ! -f "gemfiles/${GEMFILE_NAME}.gemfile" ]; then
+            echo "Error: gemfile not created at gemfiles/${GEMFILE_NAME}.gemfile"
+            exit 1
+          fi
+          # Set BUNDLE_GEMFILE for subsequent steps
+          echo "BUNDLE_GEMFILE=gemfiles/${GEMFILE_NAME}.gemfile" >> $GITHUB_ENV
+
+      - name: Update lockfile for platform and Ruby version
+        run: |
+          GEMFILE_NAME=$(echo "${{ matrix.rails_version }}" | tr '-' '_')
+          GEMFILE_PATH="gemfiles/${GEMFILE_NAME}.gemfile"
+          export BUNDLE_GEMFILE=${GEMFILE_PATH}
+          if [ -f "${GEMFILE_PATH}.lock" ]; then
+            # Add Linux platform if needed
+            bundle lock --add-platform x86_64-linux --gemfile ${GEMFILE_PATH} 2>/dev/null || true
+            # Try to install - if it fails due to incompatible versions, regenerate lockfile
+            if ! bundle install --gemfile ${GEMFILE_PATH} 2>/dev/null; then
+              echo "Lockfile has incompatible versions, regenerating..."
+              rm -f "${GEMFILE_PATH}.lock"
+              bundle install --gemfile ${GEMFILE_PATH}
+            fi
+          fi
+
+      - name: Install dependencies
+        uses: ruby/setup-ruby@v1
         with:
+          ruby-version: ${{ matrix.ruby_version }}
           bundler-cache: true
-      - run: bundle exec rspec
-      - uses: codecov/codecov-action@v5
+
+      - name: Run tests
+        run: bundle exec appraisal ${{ matrix.rails_version }} rspec
+
+      - name: Upload coverage reports to Codecov
+        if: matrix.rails_version == 'rails-8.1'
+        uses: codecov/codecov-action@v5
         continue-on-error: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - uses: codecov/test-results-action@v1
-        if: ${{ !cancelled() }}
+
+      - name: Upload test results to Codecov
+        if: matrix.rails_version == 'rails-8.1'
+        uses: codecov/test-results-action@v1
         continue-on-error: true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/junit-coverage.xml
-      - uses: codacy/codacy-coverage-reporter-action@v1.3.0
-        continue-on-error: true
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/coverage.xml
+
+      - name: Run linter
+        if: matrix.rails_version == 'rails-8.1'
+        env:
+          BUNDLE_GEMFILE: Gemfile
+        run: |
+          bundle install
+          bundle exec standardrb --format simple
+
+      - name: Check type signatures
+        if: matrix.rails_version == 'rails-8.1'
+        env:
+          BUNDLE_GEMFILE: Gemfile
+        run: |
+          bundle install
+          bundle exec rbs validate

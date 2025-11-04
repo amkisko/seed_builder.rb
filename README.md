@@ -106,9 +106,22 @@ SeedBuilder.config.use_seed_loader = false
 ```bash
 # Install dependencies
 bundle install
+bundle exec appraisal install
 
-# Run tests
+# Run tests for current Rails version
 bundle exec rspec
+
+# Run tests for all Rails versions (6.1, 7.2, 8.1)
+bin/appraisals
+
+# Run tests for specific Rails version
+bin/appraisals rails-7.2
+
+# Run tests for multiple versions
+bin/appraisals rails-7.2 rails-8.1
+
+# Or use appraisal directly
+bundle exec appraisal rails-7.2 rspec
 
 # Run linter
 bundle exec standardrb --fix

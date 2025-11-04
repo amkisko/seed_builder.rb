@@ -30,8 +30,8 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = ">= 3"
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "rails", ">= 6", "< 8.1"
-  gem.add_dependency "activerecord", ">= 6", "< 8.1"
+  gem.add_dependency "rails", ">= 6.1", "< 8.2"
+  gem.add_dependency "activerecord", ">= 6.1", "< 8.2"
 
   gem.add_development_dependency "bundler", "~> 2"
   gem.add_development_dependency "rspec", "~> 3"
@@ -41,4 +41,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "sqlite3", "~> 2.4"
   gem.add_development_dependency "standard", "~> 1.0"
   gem.add_development_dependency "rbs", "~> 3.0"
+  gem.add_development_dependency "appraisal", "~> 2.4"
 end
