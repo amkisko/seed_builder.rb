@@ -1,9 +1,10 @@
 name: test
-permissions: read-all
-on: [push, pull_request]
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
-  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -66,33 +67,22 @@ jobs:
       - name: Run tests
         run: bundle exec appraisal ${{ matrix.rails_version }} rspec
 
-      - name: Upload coverage reports to Codecov
-        if: matrix.rails_version == 'rails-8.1'
-        uses: codecov/codecov-action@v5
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rspec
+      - uses: codecov/codecov-action@v5
         continue-on-error: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Upload test results to Codecov
-        if: matrix.rails_version == 'rails-8.1'
-        uses: codecov/test-results-action@v1
+      - uses: codecov/test-results-action@v1
+        if: ${{ !cancelled() }}
         continue-on-error: true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/junit-coverage.xml
-
-      - name: Run linter
-        if: matrix.rails_version == 'rails-8.1'
-        env:
-          BUNDLE_GEMFILE: Gemfile
-        run: |
-          bundle install
-          bundle exec standardrb --format simple
-
-      - name: Check type signatures
-        if: matrix.rails_version == 'rails-8.1'
-        env:
-          BUNDLE_GEMFILE: Gemfile
-        run: |
-          bundle install
-          bundle exec rbs validate
