@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
+.bundle
 /vendor/bundle
 
 .byebug_history
@@ -22,4 +22,5 @@
 
 *.local
 *.gem
-/gemfiles
+
+/gemfiles/*.lock
