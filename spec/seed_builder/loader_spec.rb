@@ -234,6 +234,7 @@ describe SeedBuilder::Loader do
 
     context "when seed class does not respond to change" do
       let(:invalid_seed_path) { File.expand_path("../../tmp/rspec/db/seeds/20241206200112_no_change.rb", __FILE__) }
+      let(:original_seeds_path) { SeedBuilder.config.seeds_full_path }
 
       before do
         FileUtils.mkdir_p(File.dirname(invalid_seed_path))
@@ -249,6 +250,9 @@ describe SeedBuilder::Loader do
 
       after do
         File.delete(invalid_seed_path) if File.exist?(invalid_seed_path)
+        SeedBuilder.configure do |config|
+          config.seeds_full_path = original_seeds_path
+        end
       end
 
       it "raises an error" do

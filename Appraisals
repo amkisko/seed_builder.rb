@@ -1,6 +1,7 @@
 appraise "rails6" do
   gem "rails", "~> 6.1"
   gem "activerecord", "~> 6.1"
+  gem "sqlite3", "~> 1.4"
 end
 
 appraise "rails72" do

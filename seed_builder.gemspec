@@ -2,7 +2,6 @@ Gem::Specification.new do |gem|
   gem.name = "seed_builder"
   gem.version = File.read(File.expand_path("../lib/seed_builder.rb", __FILE__)).match(/VERSION\s*=\s*"(.*?)"/)[1]
 
-  repository_url = "https://github.com/amkisko/seed_builder.rb"
   root_files = %w[CHANGELOG.md LICENSE.md README.md]
   root_files << "#{gem.name}.gemspec"
 
@@ -12,14 +11,14 @@ Gem::Specification.new do |gem|
 
   gem.authors = ["Andrei Makarov"]
   gem.email = ["contact@kiskolabs.com"]
-  gem.homepage = repository_url
+  gem.homepage = "https://github.com/amkisko/seed_builder.rb"
   gem.summary = "Seed builder with loader and generator"
   gem.description = "Extension for ActiveRecord to organize seeds in a directory and generate them as migrations"
   gem.metadata = {
-    "homepage" => repository_url,
-    "source_code_uri" => repository_url,
-    "bug_tracker_uri" => "#{repository_url}/issues",
-    "changelog_uri" => "#{repository_url}/blob/main/CHANGELOG.md",
+    "homepage" => "https://github.com/amkisko/seed_builder.rb",
+    "source_code_uri" => "https://github.com/amkisko/seed_builder.rb",
+    "bug_tracker_uri" => "https://github.com/amkisko/seed_builder.rb/issues",
+    "changelog_uri" => "https://github.com/amkisko/seed_builder.rb/blob/main/CHANGELOG.md",
     "rubygems_mfa_required" => "true"
   }
 
@@ -36,10 +35,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "bundler", "~> 2"
   gem.add_development_dependency "rspec", "~> 3"
   gem.add_development_dependency "rspec_junit_formatter", "~> 0.6"
-  gem.add_development_dependency "simplecov", "~> 0.21"
-  gem.add_development_dependency "simplecov-cobertura", "~> 2"
+  gem.add_development_dependency "simplecov", "~> 0.22"
+  gem.add_development_dependency "simplecov-cobertura", "~> 3"
   gem.add_development_dependency "sqlite3", "~> 2.4"
-  gem.add_development_dependency "standard", "~> 1.0"
-  gem.add_development_dependency "rbs", "~> 3.0"
-  gem.add_development_dependency "appraisal", "~> 2.4"
+  gem.add_development_dependency "standard", "~> 1"
+  gem.add_development_dependency "rbs", "~> 3"
+  gem.add_development_dependency "appraisal", "~> 2"
 end
