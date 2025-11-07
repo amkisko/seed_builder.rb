@@ -128,7 +128,7 @@ The logger will be automatically wrapped with `ActiveSupport::TaggedLogging` if 
 ```bash
 # Install dependencies
 bundle install
-bundle exec appraisal install
+bundle exec appraisal generate
 
 # Run tests for current Rails version
 bundle exec rspec
