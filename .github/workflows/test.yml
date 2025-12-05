@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -21,26 +21,26 @@ jobs:
             ruby_version: "3.4"
           - gemfile: rails8truffleruby
             ruby_version: "truffleruby"
-    
+
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
-    
+
     steps:
-    - uses: actions/checkout@v5
-    
+    - uses: actions/checkout@v6
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby_version }}
         bundler-cache: true
-    
+
     - name: Run tests
       run: bundle exec rspec
 
   coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.4"
