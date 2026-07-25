@@ -342,7 +342,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 7.2)
   appraisal (~> 2)
-  bundler (~> 2)
+  bundler (>= 2)
   polyrun (>= 2.2.0)
   prosopite (~> 2.0)
   rails (~> 7.2)
@@ -363,4 +363,4 @@ DEPENDENCIES
   standard-rspec (~> 0.3)
 
 BUNDLED WITH
-   2.7.2
+  4.0.16
