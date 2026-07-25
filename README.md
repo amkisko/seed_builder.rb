@@ -1,6 +1,6 @@
 # seed_builder.rb
 
-[![Gem Version](https://badge.fury.io/rb/seed_builder.svg)](https://badge.fury.io/rb/seed_builder) [![Test Status](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml/badge.svg)](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/amkisko/seed_builder.rb/graph/badge.svg?token=57R6OHOJDQ)](https://codecov.io/gh/amkisko/seed_builder.rb)
+[![Gem Version](https://badge.fury.io/rb/seed_builder.svg)](https://badge.fury.io/rb/seed_builder) [![Test Status](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml/badge.svg)](https://github.com/amkisko/seed_builder.rb/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/amkisko/seed_builder.rb/graph/badge.svg?token=57R6OHOJDQ)](https://app.codecov.io/github/amkisko/seed_builder.rb)
 
 Seed builder for ActiveRecord. Includes seeds loader and generator.
 
@@ -194,6 +194,19 @@ gem build seed_builder.gemspec
 gem push seed_builder-$GEM_VERSION.gem
 git tag $GEM_VERSION && git push --tags
 ```
+
+## Links
+
+- [GitHub](https://github.com/amkisko/seed_builder.rb)
+- [GitLab](https://gitlab.com/amkisko/seed_builder.rb)
+- [RubyGems](https://rubygems.org/gems/seed_builder)
+- [Versions Atom](https://rubygems.org/gems/seed_builder/versions.atom) (feed id `8140233409492`)
+- [libraries.io](https://libraries.io/rubygems/seed_builder)
+- [Deps.dev](https://deps.dev/rubygems/seed_builder)
+- [SonarCloud](https://sonarcloud.io/project/overview?id=amkisko_seed_builder.rb)
+- [Snyk](https://snyk.io/test/github/amkisko/seed_builder.rb)
+- [Codecov](https://app.codecov.io/github/amkisko/seed_builder.rb)
+- [OpenSSF Scorecard](https://scorecard.dev/viewer/?uri=github.com/amkisko/seed_builder.rb)
 
 ## License
 
