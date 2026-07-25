@@ -1,7 +1,7 @@
 namespace :seed do
   desc "Run a specific seed file by name"
   task :run, [:seed_name] => :environment do |_task, args|
-    if args[:seed_name].nil? || args[:seed_name].empty?
+    if args[:seed_name].blank?
       puts "Usage: bin/rails seed:run[SEED_NAME]"
       puts ""
       puts "Run a specific seed file by name."

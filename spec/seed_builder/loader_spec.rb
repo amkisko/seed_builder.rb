@@ -138,8 +138,8 @@ describe SeedBuilder::Loader do
     end
 
     context "when multiple seed files match the name" do
-      let(:seed_path_1) { File.expand_path("../../tmp/rspec/db/seeds/20241206200111_create_users.rb", __FILE__) }
-      let(:seed_path_2) { File.expand_path("../../tmp/rspec/db/seeds/20241206200112_create_users.rb", __FILE__) }
+      let(:first_matching_seed_path) { File.expand_path("../../tmp/rspec/db/seeds/20241206200111_create_users.rb", __FILE__) }
+      let(:second_matching_seed_path) { File.expand_path("../../tmp/rspec/db/seeds/20241206200112_create_users.rb", __FILE__) }
       let(:log_output) { StringIO.new }
       let(:test_logger) { Logger.new(log_output) }
 
@@ -147,17 +147,17 @@ describe SeedBuilder::Loader do
         allow(Rails).to receive(:logger).and_return(test_logger)
         # Reset SeedBuilder logger to pick up the stubbed Rails.logger
         SeedBuilder.instance_variable_set(:@logger, nil) if SeedBuilder.instance_variable_defined?(:@logger)
-        FileUtils.mkdir_p(File.dirname(seed_path_1))
-        File.write(seed_path_1, "class CreateUsers; def change; end; end")
-        File.write(seed_path_2, "class CreateUsers; def change; end; end")
+        FileUtils.mkdir_p(File.dirname(first_matching_seed_path))
+        File.write(first_matching_seed_path, "class CreateUsers; def change; end; end")
+        File.write(second_matching_seed_path, "class CreateUsers; def change; end; end")
         SeedBuilder.configure do |config|
-          config.seeds_full_path = File.dirname(seed_path_1)
+          config.seeds_full_path = File.dirname(first_matching_seed_path)
         end
       end
 
       after do
-        File.delete(seed_path_1) if File.exist?(seed_path_1)
-        File.delete(seed_path_2) if File.exist?(seed_path_2)
+        File.delete(first_matching_seed_path) if File.exist?(first_matching_seed_path)
+        File.delete(second_matching_seed_path) if File.exist?(second_matching_seed_path)
       end
 
       it "outputs an error message listing all matching files" do

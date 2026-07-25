@@ -6,6 +6,7 @@ describe SeedGenerator, type: :generator do
   include FileUtils
 
   subject(:generator) { described_class.start params }
+
   let(:destination_root) { File.expand_path("../../tmp/rspec", __FILE__) }
   let(:seeds_path) { rails_root.join("db/seeds") }
 
@@ -13,7 +14,7 @@ describe SeedGenerator, type: :generator do
   let(:params) { [seed_name] }
 
   let(:created_files) { Dir["#{seeds_path}/*_#{seed_name}.rb"] }
-  let(:file_contents) { File.readlines(created_files.first).map(&:strip).reject(&:blank?) }
+  let(:file_contents) { File.readlines(created_files.first).map(&:strip).compact_blank }
 
   before do
     mkdir_p destination_root
