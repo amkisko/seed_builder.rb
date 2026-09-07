@@ -129,7 +129,7 @@ describe SeedBuilder::Loader do
 
       it "outputs an error message" do
         loader.load_seed_file("nonexistent_seed")
-        expect(log_output.string).to match(/Seed file 'nonexistent_seed' not found/)
+        expect(log_output.string).to include("Seed file 'nonexistent_seed' not found")
       end
 
       it "does not raise an error" do
@@ -174,7 +174,7 @@ describe SeedBuilder::Loader do
       it "works when using the full name with timestamp" do
         SeedBuilderUser.delete_all
         loader.load_seed_file("20241206200111_create_users")
-        expect(log_output.string).not_to match(/Multiple seed files/)
+        expect(log_output.string).not_to include("Multiple seed files")
         expect(SeedBuilderUser.count).to eq 0 # The seed doesn't actually create anything, just checks it runs
       end
     end
@@ -224,7 +224,7 @@ describe SeedBuilder::Loader do
 
       it "outputs an error message" do
         loader.load_seed_file("invalid_seed")
-        expect(log_output.string).to match(/Invalid seed file format/)
+        expect(log_output.string).to include("Invalid seed file format")
       end
 
       it "does not raise an error" do
