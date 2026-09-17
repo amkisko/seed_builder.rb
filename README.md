@@ -131,7 +131,7 @@ bundle install
 bundle exec appraisal generate
 
 # Run tests for current Rails version
-bundle exec rspec
+bundle exec polyrun parallel-rspec --workers 5 --merge-failures
 
 # Run tests for all Rails versions (6.1, 7.2, 8.1)
 bin/appraisals
